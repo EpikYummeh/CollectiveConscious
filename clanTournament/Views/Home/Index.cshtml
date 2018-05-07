@@ -1,0 +1,182 @@
+﻿@{
+    ViewBag.Title = "Tournament";
+}
+
+<section id="bracket">
+    <div class="container">        
+        <div class="split split-one">
+            <div class="round round-one current">
+                <div class="round-details">Clan 1: Round 1<br /><span class="date">Some Date</span></div>
+                @foreach (var matchup in ViewData["MatchupsA"] as List<clanTournament.Models.TeamMatchup>)
+            {
+                <ul class="matchup">
+                    <li class="team team-top">
+                        <span class="round-details">
+                            @if (matchup.TeamA.Seed.ToString().Length != 1)
+                        {
+                            @(matchup.TeamA.Seed.ToString());
+                        @:&nbsp;
+                }
+                else
+                { @(matchup.TeamA.Seed.ToString());
+            @:&nbsp;&nbsp;&nbsp;
+    }
+                        </span>
+                        @matchup.TeamA.TeamName
+                        <span class="score">150</span>
+                    </li>
+                    <li class="team team-top">
+                        <span class="round-details">
+                            @if (matchup.TeamB.Seed.ToString().Length != 1)
+                        {
+                            @(matchup.TeamB.Seed.ToString());
+                        @:&nbsp;
+                }
+                else
+                { @(matchup.TeamB.Seed.ToString());
+            @:&nbsp;&nbsp;&nbsp;
+    }
+                        </span>
+                        @matchup.TeamB.TeamName
+                        <span class="score">140</span>
+                    </li>
+
+                </ul>
+        }
+            </div><!-- END ROUND ONE -->
+
+            <div class="round round-two">
+                <div class="round-details">Round 2<br /><span class="date">Some Date</span></div>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+            </div>  <!-- END ROUND TWO -->
+
+            <div class="round round-three">
+                <div class="round-details">Round 3<br /><span class="date">Some Date</span></div>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+            </div>  <!-- END ROUND THREE -->
+        </div>
+
+        <div class="champion">
+            <div class="semis-l">
+                <div class="round-details"> semifinals <br /><span class="date">Some Date</span></div>
+                <ul class="matchup championship">
+                    <li class="team team-top">&nbsp;<span class="vote-count">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="vote-count">&nbsp;</span></li>
+                </ul>
+            </div>
+            <div class="final">
+                <i class="fa fa-trophy"></i>
+                <div class="round-details">championship <br /><span class="date">Some Date</span></div>
+                <ul class="matchup championship">
+                    <li class="team team-top">&nbsp;<span class="vote-count">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="vote-count">&nbsp;</span></li>
+                </ul>
+            </div>
+            <div class="semis-r">
+                <div class="round-details"> semifinals <br /><span class="date">Some Date</span></div>
+                <ul class="matchup championship">
+                    <li class="team team-top">&nbsp;<span class="vote-count">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="vote-count">&nbsp;</span></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="split split-two">
+
+
+            <div class="round round-three">
+                <div class="round-details">Round 3<br /><span class="date">Some Date</span></div>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+            </div>  <!-- END ROUND THREE -->
+
+            <div class="round round-two">
+                <div class="round-details">Round 2<br /><span class="date">Some Date</span></div>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+                <ul class="matchup">
+                    <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
+                    <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                </ul>
+            </div>  <!-- END ROUND TWO -->
+            <div class="round round-one current">
+                <div class="round-details">Clan 2: Round 1<br /><span class="date">Some Date</span></div>
+                @foreach (var matchup in ViewData["MatchupsB"] as List<clanTournament.Models.TeamMatchup>)
+            {
+                <ul class="matchup">
+                    <li class="team team-top">
+                        <span class="round-details">
+                            @if (matchup.TeamA.Seed.ToString().Length != 1)
+                        {
+                            @(matchup.TeamA.Seed.ToString());
+                        @:&nbsp;
+                }
+                else
+                { @(matchup.TeamA.Seed.ToString());
+            @:&nbsp;&nbsp;&nbsp;
+    }
+                        </span>
+                        @matchup.TeamA.TeamName
+                        <span class="score">150</span>
+                    </li>
+                    <li class="team team-top">
+                        <span class="round-details">
+                            @if (matchup.TeamB.Seed.ToString().Length != 1)
+                        {
+                            @(matchup.TeamB.Seed.ToString());
+                        @:&nbsp;
+                }
+                else
+                { @(matchup.TeamB.Seed.ToString());
+            @:&nbsp;&nbsp;&nbsp;
+    }
+                        </span>
+                        @matchup.TeamB.TeamName
+                        <span class="score">140</span>
+                    </li>
+
+                </ul>
+        }
+            </div><!-- END ROUND ONE -->
+        </div>
+    </div>
+</section>
