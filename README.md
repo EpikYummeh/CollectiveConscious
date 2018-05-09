@@ -10,3 +10,24 @@ DestinyService service = new DestinyService(apiKey); //api Key stored in HomeCon
 Bungie.Responses.SearchPlayersResponse member = await service.SearchPlayers(MembershipType.Blizzard, "dasWoj%231113"); //ensure that you use %23 instead of #
 memberId = member[0].MembershipId.ToString();
 ```
+## Inserting into the DB Example:
+```
+                using (var context = new CoCodbEntities1())
+                {
+                    var t = new TeamModel
+                    {
+                        TeamName = model.TeamModel.TeamName,
+                        ClanName = group.Results[0].Group.Name
+                };
+                    var g = new GuardianModel
+                    {
+                        MembershipId = memberId.ToString(),
+                        DisplayName = BNETId,
+                        MembershipType = 4,
+                        TeamID = t.Id
+                    };
+                    context.TeamModels.Add(t);
+                    context.GuardianModels.Add(g);
+                    context.SaveChanges();
+                }
+```
