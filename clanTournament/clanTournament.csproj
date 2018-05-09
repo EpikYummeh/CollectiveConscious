@@ -101,11 +101,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.5\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -224,8 +227,30 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\GuardianModel.cs" />
-    <Compile Include="Models\TeamModel.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CoCodbEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoCodbEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CoCodbEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoCodbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CoCodbEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoCodbEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetConnectionString.cs" />
+    <Compile Include="Models\GuardianModel.cs">
+      <DependentUpon>CoCodbEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SignupModel.cs" />
+    <Compile Include="Models\TeamModel.cs">
+      <DependentUpon>CoCodbEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TournamentModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\token.aspx.cs">
@@ -241,6 +266,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CoCodb.mdf" />
+    <Content Include="App_Data\CoCodb_log.ldf">
+      <DependentUpon>CoCodb.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -249,6 +278,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\CoCodbEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CoCodbEntities.edmx</DependentUpon>
+      <LastGenOutput>CoCodbEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CoCodbEntities.edmx.sql" />
+    <Content Include="Models\CoCodbEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CoCodbEntities.edmx</DependentUpon>
+      <LastGenOutput>CoCodbEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="Pages\token.aspx" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -256,6 +296,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\CoCodbEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CoCodbEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CoCodbEntities.edmx.diagram">
+      <DependentUpon>CoCodbEntities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -283,9 +330,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

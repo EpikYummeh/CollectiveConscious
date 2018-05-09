@@ -6,13 +6,52 @@
     using BaseJump;
     using Responses;
 
-    [Route("https://www.bungie.net/Platform/Destiny2/")]
+    [Route("https://www.bungie.net/Platform/")]
     public class DestinyService : BungieService, IDestinyService
     {
         public DestinyService(string apiKey) : 
             base(apiKey)
         {
         }
+        [Route("Destiny2/{membershipType}/Profile/{membershipId}/?components=100")]
+        public Task<GetProfileResponse> GetProfile(MembershipType membershipType, long membershipId)
+        {
+            var model = new
+            {
+                membershipType,
+                membershipId
+            };
+            return Request<GetProfileResponse>(model);
+        }
+
+        /// <summary>
+        /// Returns a list of players by username and platform.
+        /// </summary>
+        /// <remarks>
+        /// http://bungienetplatform.wikia.com/wiki/SearchDestinyPlayer
+        /// </remarks>
+        [Route("Destiny2/SearchDestinyPlayer/{membershipType}/{displayName}")]
+        public Task<SearchPlayersResponse> SearchPlayers(MembershipType membershipType, string displayName)
+        {
+            var model = new
+            {
+                membershipType,
+                displayName
+            };
+
+            return Request<SearchPlayersResponse>(model);
+        }
+        [Route("User/SearchUsers/?q={displayName}")]
+        public Task<SearchUsersResponse> SearchUsers(string displayName)
+        {
+            var model = new
+            {
+                displayName
+            };
+            return Request<SearchUsersResponse>(model);
+        }
+
+        #region Depreciated
 
         /// <summary>
         /// Returns items and character info for a given account.
@@ -565,24 +604,6 @@
         }
 
         /// <summary>
-        /// Returns a list of players by username and platform.
-        /// </summary>
-        /// <remarks>
-        /// http://bungienetplatform.wikia.com/wiki/SearchDestinyPlayer
-        /// </remarks>
-        [Route("SearchDestinyPlayer/{membershipType}/{displayName}")]
-        public Task<SearchPlayersResponse> SearchPlayers(MembershipType membershipType, string displayName)
-        {
-            var model = new
-            {
-                membershipType,
-                displayName
-            };
-
-            return Request<SearchPlayersResponse>(model);
-        }
-
-        /// <summary>
         /// Advanced search for TalentNodes.
         /// </summary>
         /// <remarks>
@@ -605,6 +626,7 @@
             };
 
             return Request<SearchTalentNodeStepsResponse>(model);
-        }      
+        }
+        #endregion
     }
 }

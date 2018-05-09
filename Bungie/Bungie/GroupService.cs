@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bungie
+﻿namespace Bungie
 {
     using System.Threading.Tasks;
     using BaseJump;
@@ -38,7 +32,18 @@ namespace Bungie
             };
             return Request<GetGroupByNameResponse>(model);
         }
-
+        [Route("User/{membershipType}/{membershipId}/{filter}/{groupType}/")]
+        public Task<GetGroupsForMemberResponse> GetGroupsForMember(MembershipType membershipType, long membershipId, GroupsForMemberFilter filter, GroupType groupType)
+        {
+            var model = new
+            {
+                membershipType,
+                membershipId,
+                filter,
+                groupType
+            };
+            return Request<GetGroupsForMemberResponse>(model);
+        }
         [Route("{groupId}/InviteGroupMember/{membershipId}/")]
         public Task<SetGroupInvitation> SetGroupInvitation(long groupId, long membershipId)
         {

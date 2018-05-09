@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    ViewBag.Title = "Tournament Signup";
+}
+
+<!-- Need to redesign form to include joining a team, checking to see if team name exists, 
+    a callback check to see if team name exists, and a general look and feel redesign -->
+<section id="bracket">
+    <div class="container">
+        <div class="split split-one">
+            <form method="post">
+                <div class="form-group">
+                    @model clanTournament.Models.GuardianModel
+                    @using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+                    {                        
+                        @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control", placeholder="Enter your Battle Net ID" })
+                        @Html.LabelFor(model => model.DisplayName, new { @class = "label label-default" })
+                        @Html.ValidationMessageFor(model => model.DisplayName)                                                
+                        @Html.TextBoxFor(model => model.TeamModel.TeamName, new { @class = "form-control", placeholder="Enter a Team Name" })
+                        @Html.LabelFor(model => model.TeamModel.TeamName, new { @class = "label label-default" })
+                        @Html.ValidationMessageFor(model => model.TeamModel.TeamName)
+                        <br/>
+                        <button type="submit" class="btn btn-primary" style="width:200px">Submit</button>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

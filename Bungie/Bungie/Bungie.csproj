@@ -104,7 +104,9 @@
     <Compile Include="ForumService.cs" />
     <Compile Include="GenderType.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="GroupsForMemberFilter.cs" />
     <Compile Include="GroupType.cs" />
+    <Compile Include="GroupTypes.cs" />
     <Compile Include="GuardianAttribute.cs" />
     <Compile Include="HashMap.cs" />
     <Compile Include="IDestinyService.cs" />
@@ -123,13 +125,22 @@
     <Compile Include="Models\AggregateActivity.cs" />
     <Compile Include="Models\BungieUser.cs" />
     <Compile Include="Models\CharacterClass.cs" />
+    <Compile Include="Models\Characters.cs" />
     <Compile Include="Models\Clan.cs" />
     <Compile Include="Models\ClanMember.cs" />
     <Compile Include="Models\DestinyAccount.cs" />
+    <Compile Include="Models\Enums\ChatSecurity.cs" />
+    <Compile Include="Models\Enums\GroupHomepage.cs" />
+    <Compile Include="Models\Enums\GroupMemberType.cs" />
+    <Compile Include="Models\Enums\GroupPostPublicity.cs" />
+    <Compile Include="Models\Enums\MembershipOption.cs" />
+    <Compile Include="Models\GeneralUser.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\GroupDetail.cs" />
     <Compile Include="Models\GroupId.cs" />
+    <Compile Include="Models\GroupMember.cs" />
     <Compile Include="Models\GroupResults.cs" />
+    <Compile Include="Models\GroupSearchResults.cs" />
     <Compile Include="Models\ItemSearch.cs" />
     <Compile Include="Models\ItemSummary.cs" />
     <Compile Include="Models\SaleItemCategory.cs" />
@@ -157,6 +168,8 @@
     <Compile Include="Models\WeaponStat.cs" />
     <Compile Include="Count.cs" />
     <Compile Include="Posts\SetGroupInvitation.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileData.cs" />
     <Compile Include="RaceType.cs" />
     <Compile Include="Responses\DefinitionsResponse.cs" />
     <Compile Include="Responses\GetAccountSummaryResponse.cs" />
@@ -206,7 +219,9 @@
     <Compile Include="Responses\GetCharacterInventorySummaryResponse.cs" />
     <Compile Include="Responses\GetDefinitionResponse.cs" />
     <Compile Include="Responses\GetGroupByNameResponse.cs" />
+    <Compile Include="Responses\GetGroupsForMemberResponse.cs" />
     <Compile Include="Responses\GetGroupUsersResponse.cs" />
+    <Compile Include="Responses\GetProfileResponse.cs" />
     <Compile Include="Responses\GetStatsDefinitionResponse.cs" />
     <Compile Include="Models\InventorySummary.cs" />
     <Compile Include="Models\ItemObjective.cs" />
@@ -254,6 +269,7 @@
     <Compile Include="Responses\SearchItemsResponse.cs" />
     <Compile Include="Responses\SearchPlayersResponse.cs" />
     <Compile Include="Responses\SearchTalentNodeStepsResponse.cs" />
+    <Compile Include="Responses\SearchUsers.cs" />
     <Compile Include="SortDirection.cs" />
     <Compile Include="SourceCategory.cs" />
     <Compile Include="Unknown.cs" />
@@ -322,6 +338,7 @@
     <Compile Include="Rarity.cs" />
     <Compile Include="StatsGroup.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="VersionsOwned.cs" />
     <Compile Include="WeaponPerformance.cs" />
   </ItemGroup>
   <ItemGroup>
