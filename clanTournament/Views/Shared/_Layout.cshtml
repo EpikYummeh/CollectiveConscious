@@ -23,16 +23,31 @@
             <p>Collective Conscious</p>
         </div>
     </header>
-        @RenderBody()
-        <section class="share">
-            <div class="share-wrap">
-                <a class="share-icon" href="#"><i class="fa fa-discord"></i></a>
+    @if (TempData["UserMessage"] != null)
+    {
+        var message = (clanTournament.Models.MessageVM)TempData["UserMessage"];
+        <section id="bracket">
+            <div class="container">                
+                <div class="@message.ClassName">
+                    <strong>@message.Title</strong><br />
+                    @message.Message
+                    <br/>
+                    <a href="/Home/Signup/" class="col-form-label-sm">Return to the Signup Page</a>
+                </div>
             </div>
         </section>
+    }
+
+    @RenderBody()
+    <section class="share">
+        <div class="share-wrap">
+            <a class="share-icon" href="#"><i class="fa fa-discord"></i></a>
+        </div>
+    </section>
 
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)*@
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
 </body>
 </html>

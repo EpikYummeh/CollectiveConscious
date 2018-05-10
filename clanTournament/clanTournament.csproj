@@ -247,7 +247,8 @@
     <Compile Include="Models\GuardianModel.cs">
       <DependentUpon>CoCodbEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SignupModel.cs" />
+    <Compile Include="Models\JoinTeamModel.cs" />
+    <Compile Include="Models\MessageVM.cs" />
     <Compile Include="Models\TeamModel.cs">
       <DependentUpon>CoCodbEntities.tt</DependentUpon>
     </Compile>
@@ -331,6 +332,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Signup.cshtml" />
+    <Content Include="Views\Home\CreateTeam.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Success.cshtml" />
+    <Content Include="Views\Home\JoinTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

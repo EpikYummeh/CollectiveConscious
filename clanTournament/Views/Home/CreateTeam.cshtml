@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Create a Team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="bracket">
+    <div class="container">        
+        <div class="col-md-6 offset-3">
+            <form method="post">
+                <div class="form-group" id="frmGrp">
+                    @using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+                    {
+                        @model clanTournament.Models.GuardianModel
+                        @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control form-control-lg", placeholder = "Enter your Battle Net ID" })
+                        @Html.ValidationMessageFor(model => model.DisplayName, "Please enter a Battle Net ID.", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.TeamModel.TeamName, new { @class = "form-control form-control-lg", placeholder = "Enter a Team Name" })
+                        @Html.ValidationMessageFor(model => model.TeamModel.TeamName, "Team names are required.", new { @class = "text-danger" })
+                        <br />
+                        <button type="submit" class="btn btn-primary" style="width:100%;text-align:center;">Submit</button>
+                    }
+                    <label class="col-form-label-sm">**Note: By creating this team you are the team leader, which means that you are responsible for getting your team organized for the tournament. Please read the <a href="#">tournament rules</a> before agreeing to take on this responsibility.</label>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+

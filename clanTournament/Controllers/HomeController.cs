@@ -15,12 +15,27 @@ namespace clanTournament.Controllers
     public class HomeController : Controller
     {
         const string apiKey = "03e7fac7f7dc4ffa8ab2c83092a71a87";
+        DestinyService service = new DestinyService(apiKey);
+        GroupService groupService = new GroupService(apiKey);
         Models.CoCodbEntities1 _db;
         public HomeController()
         {
             _db = new CoCodbEntities1();
         }
-        public async Task<ActionResult> Index()
+#region MessageViews
+        public ActionResult Error()
+        {
+            return View();
+        }
+        public ActionResult Success()
+        {
+            return View();
+        }
+
+#endregion
+
+#region IndexView
+        public ActionResult Index()
         {
             _db.Database.Initialize(false);
             //testing teams
@@ -105,29 +120,6 @@ namespace clanTournament.Controllers
             return View();
         }
         /// <summary>
-        /// Test to see if Bungie API is working
-        /// When querying a Battle Net gamer tag, you need to use %23 instead of #
-        /// </summary>
-        /// <returns></returns>
-        public async Task<ActionResult> BungieTest()
-        {
-            DestinyService service = new DestinyService(apiKey);
-            long memberId = 0;
-            try
-            {
-                Bungie.Responses.SearchPlayersResponse member = await service.SearchPlayers(MembershipType.Blizzard, "dasWoj%231113");
-                memberId = member[0].MembershipId;
-                Bungie.Responses.GetProfileResponse profile = await service.GetProfile(MembershipType.Blizzard, memberId);
-                string test = profile.Profile.Data.DateLastPlayed.ToString();
-            }
-            catch(Exception ex)
-            {
-                //memberId = ex.Message;
-            }
-            ViewBag.GetMemberId = memberId;
-            return View();
-        }
-        /// <summary>
         /// Used to Truncate long team names as they wouldn't fit in the div boxes if longer than 15 characters
         /// </summary>
         /// <param name="teamName"></param>
@@ -141,6 +133,10 @@ namespace clanTournament.Controllers
             }
             return teamReturned;
         }
+#endregion
+
+
+#region SignupView
 
         /// <summary>
         /// Instatiate the Signup View
@@ -159,42 +155,132 @@ namespace clanTournament.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Signup(GuardianModel model)
-        {
 
-            DestinyService service = new DestinyService(apiKey);
-            GroupService groupService = new GroupService(apiKey);
-            GetConnectionString db = new GetConnectionString();
-            string BNETId = model.DisplayName.Replace("#", "%23");
-            long memberId = 0;
-            if (ModelState.IsValid)
+#endregion
+#region CreateTeamView/JoinTeamView
+        /// <summary>
+        /// Instatiate the Create Team View
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateTeam()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateTeam(GuardianModel model)
+        {            
+            try
             {
-                Bungie.Responses.SearchPlayersResponse member = await service.SearchPlayers(MembershipType.Blizzard, BNETId);
-                memberId = member[0].MembershipId;
-                Bungie.Responses.GetGroupsForMemberResponse group = await groupService.GetGroupsForMember(MembershipType.Blizzard, memberId, GroupsForMemberFilter.All, GroupType.Clan);
+                string BNETId = model.DisplayName.Replace("#", "%23");
+                long memberId = 0;
+                if (ModelState.IsValid)
+                {
+                    Bungie.Responses.SearchPlayersResponse member = await service.SearchPlayers(MembershipType.Blizzard, BNETId);
+                    memberId = member[0].MembershipId;
+                    Bungie.Responses.GetGroupsForMemberResponse group = await groupService.GetGroupsForMember(MembershipType.Blizzard, memberId, GroupsForMemberFilter.All, GroupType.Clan);
+                    using (var context = new CoCodbEntities1())
+                    {
+                        var t = new TeamModel
+                        {
+                            TeamName = model.TeamModel.TeamName,
+                            ClanName = group.Results[0].Group.Name
+                        };
+                        var g = new GuardianModel
+                        {
+                            MembershipId = memberId.ToString(),
+                            DisplayName = BNETId,
+                            MembershipType = 4,
+                            TeamID = t.Id
+                        };
+
+                        if(_db.TeamModels.Any(team => team.TeamName == t.TeamName))
+                        {
+                            TempData["UserMessage"] = new MessageVM() { ClassName = "alert-error", Title = "Error!", Message = "The team name you entered has already been used. Please select another team name." };
+                        }
+                        else
+                        {
+                            context.TeamModels.Add(t);
+                            if (_db.GuardianModels.Any(guardian => guardian.MembershipId == g.MembershipId))
+                            {
+                                TempData["UserMessage"] = new MessageVM() { ClassName = "alert-error", Title = "Error!", Message = "This Guardian has already been registered. Please sign up with a different Battle Net ID." };
+                            }
+                            else
+                            {
+                                context.GuardianModels.Add(g);
+                                context.SaveChanges();
+                                TempData["UserMessage"] = new MessageVM() { ClassName = "alert-success", Title = "Success!", Message = "Your Team has been saved." };
+                            }
+                        }                                                                    
+                        return RedirectToAction("Success");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                TempData["UserMessage"] = new MessageVM() { ClassName = "alert-error", Title = "Error!", Message = ex.Message };
+                return RedirectToAction("Error");
+            }
+
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult JoinTeam()
+        {
+            var TeamList = _db.TeamModels.ToList();
+            SelectList list = new SelectList(TeamList, "Id", "TeamName");
+            ViewBag.TeamList = list;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> JoinTeam(GuardianModel model)
+        {            
+
+            try
+            {
+                string BNETId = model.DisplayName.Replace("#", "%23");
+                long memberId = 0;
+                if (ModelState.IsValid)
+                {
+                    Bungie.Responses.SearchPlayersResponse member = await service.SearchPlayers(MembershipType.Blizzard, BNETId);
+                    memberId = member[0].MembershipId;
+                }
                 using (var context = new CoCodbEntities1())
                 {
-                    var t = new TeamModel
-                    {
-                        TeamName = model.TeamModel.TeamName,
-                        ClanName = group.Results[0].Group.Name
-                };
                     var g = new GuardianModel
                     {
                         MembershipId = memberId.ToString(),
                         DisplayName = BNETId,
                         MembershipType = 4,
-                        TeamID = t.Id
+                        TeamID = model.TeamModel.Id
                     };
-                    context.TeamModels.Add(t);
-                    context.GuardianModels.Add(g);
-                    context.SaveChanges();
+                    if (_db.GuardianModels.Any(guardian => guardian.MembershipId == g.MembershipId))
+                    {
+                        TempData["UserMessage"] = new MessageVM() { ClassName = "alert-error", Title = "Error!", Message = "This Guardian has already been registered. Please sign up with a different Battle Net ID." };
+                        return RedirectToAction("Error");
+                    }
+                    else
+                    {
+                        context.GuardianModels.Add(g);
+                        context.SaveChanges();
+                        TempData["UserMessage"] = TempData["UserMessage"] = new MessageVM() { ClassName = "alert-success", Title = "Success!", Message = "Joined the Team Successfully." };
+                        return RedirectToAction("Success");
+                    }                    
                 }
             }
-
-
-            return View("Signup", model);
+            catch(Exception ex)
+            {
+                TempData["UserMessage"] = TempData["UserMessage"] = new MessageVM() { ClassName = "alert-error", Title = "Error!", Message = ex.Message };
+                return RedirectToAction("Success");
+            }            
         }
+
+#endregion
     }
 }

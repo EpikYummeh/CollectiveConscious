@@ -1,0 +1,28 @@
+﻿@using clanTournament.Models
+@model clanTournament.Models.GuardianModel
+@{
+    ViewBag.Title = "Join a Team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="bracket">
+    <div class="container">
+        <div class="col-md-6 offset-3">
+            <form method="post">
+                <div class="form-group" id="frmGrp">
+                    @using (Html.BeginForm("JoinTeam", "Home", FormMethod.Post))
+                    {
+                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control form-control-lg", placeholder = "Enter your Battle Net ID" })
+                        <br/>
+                        
+                        @Html.DropDownListFor(m => m.TeamModel.Id, (SelectList)ViewBag.TeamList, "- Select a Team to Join -", new { @class= "form-control form-control-lg" })
+                        <br />
+                        <button type="submit" class="btn btn-primary" style="width:100%;text-align:center;">Submit</button>
+                    }
+                    <label class="col-form-label-sm">**Note: Please read the <a href="#">tournament rules</a> before signing up for the tournament.</label>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
