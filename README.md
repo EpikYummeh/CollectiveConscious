@@ -12,22 +12,22 @@ memberId = member[0].MembershipId.ToString();
 ```
 ## Inserting into the DB Example:
 ```
-                using (var context = new CoCodbEntities1())
-                {
-                    var t = new TeamModel
-                    {
-                        TeamName = model.TeamModel.TeamName,
-                        ClanName = group.Results[0].Group.Name
-                };
-                    var g = new GuardianModel
-                    {
-                        MembershipId = memberId.ToString(),
-                        DisplayName = BNETId,
-                        MembershipType = 4,
-                        TeamID = t.Id
-                    };
-                    context.TeamModels.Add(t);
-                    context.GuardianModels.Add(g);
-                    context.SaveChanges();
-                }
+using (var context = new CoCodbEntities1())
+{
+  var t = new TeamModel
+  {
+    TeamName = model.TeamModel.TeamName,
+    ClanName = group.Results[0].Group.Name
+  };
+  var g = new GuardianModel
+  {
+    MembershipId = memberId.ToString(),
+    DisplayName = BNETId,
+    MembershipType = 4,
+    TeamID = t.Id
+  };
+  context.TeamModels.Add(t);
+  context.GuardianModels.Add(g);
+  context.SaveChanges();
+}
 ```
